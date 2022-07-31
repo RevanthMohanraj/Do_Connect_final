@@ -1,0 +1,76 @@
+<!-- <h1>Register</h1>
+
+<label>Name: </label><input type="text" name="name" [(ngModel)]="name" ><br>
+<label>Email: </label><input type="text" name="email" [(ngModel)]="email" ><br>
+<label>Password: </label><input type="password" name="password" [(ngModel)]="password" ><br>
+<label>Gender: </label><input type="text" name="gender" [(ngModel)]="gender" ><br>
+<label>DOB: </label><input type="text" name="dob" [(ngModel)]="dob"><br>
+<input type="button" value="Submit" (click)="register()"><br> -->
+
+<div class="centered-with-vertical height-100">
+    
+    <div>
+        <h2></h2>
+    </div>
+    
+    <div class="width-30">
+        <div class="centered">
+            <div class="form-check pad-10">
+                
+                <label class="form-check-label" style="font-size:xx-large ;" for="flexRadioDefault1">
+                    User Registration
+                </label>
+            </div>
+        </div>
+        <div class="col-12 pad-10">
+            <div class="col-3">
+                Name
+            </div>
+            <div class="col-9">
+                <input type="text" class="form-control" name="name" [(ngModel)]="name">
+            </div>
+        </div>
+        <div class="col-12 pad-10">
+            <div class="col-3">
+                Gender
+            </div>
+            <div class="col-9">
+                <input type="text" class="form-control" name="gender" [(ngModel)]="gender">
+            </div>
+        </div>
+        <div class="col-12 pad-10">
+            <div class="col-3">
+                Email
+            </div>
+            <div class="col-9">
+                <input type="email" class="form-control" name="email" [(ngModel)]="email">
+            </div>
+        </div>
+        <div class="col-12 pad-10">
+            <div class="col-3">
+                Password
+            </div>
+            <div class="col-9">
+                <input type="password" class="form-control" name="email" [(ngModel)]="password">
+            </div>
+        </div>
+
+        <div class="col-12 pad-10">
+            <div class="col-3">
+                DOB
+            </div>
+            <div class="col-9">
+                <input type="date" class="form-control" name="dob" [(ngModel)]="dob">
+            </div>
+        </div>
+
+        <div>
+            <div class="pad-10" style="display: flex;
+            justify-content: center;
+            align-items: center;"><button type="button" class="btn btn-primary" (click)="register()">SUBMIT</button></div>
+
+        </div>
+    </div>
+</div>
+<input class="form-check-input" style="background-color: transparent;" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="user"
+                    [(ngModel)]="type">

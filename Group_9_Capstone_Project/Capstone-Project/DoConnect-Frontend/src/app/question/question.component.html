@@ -1,0 +1,201 @@
+<div style="background-color: rgb(222, 245, 248);">
+    <tabset>
+        <tab heading="All Questions" (selectTab)="loadApprovedQuestions()">
+            <div class="container" *ngIf="currentUserType == 'user'" id="navbar-example2">
+                <div class="mb-3">
+                    <h5>Ask Your Question</h5>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Ask here" rows="3"
+                        [(ngModel)]="myQuestion"></textarea>
+                    <div class="pad-10 post-btn">
+                        <!-- <button type="button" class="btn btn-primary" (click)="askYourQuestion()">ASK</button> -->
+                        <button class="btn btn-primary" type="button" (click)="askYourQuestion()">
+                            <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"
+                                aria-hidden="true"></span>
+                            {{isLoading ? 'Asking...':'Ask'}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="mb-3">
+                    <label class="form-label">Search</label>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" class="form-control" placeholder="Search Question"
+                                [(ngModel)]="searchingText">
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-primary" type="button" (click)="searchYourQuestion()">
+                                <span *ngIf="isSearching" class="spinner-border spinner-border-sm" role="status"
+                                    aria-hidden="true"></span>
+                                {{isSearching ? 'Searching...':'Search'}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="container pad-10">
+                    <div *ngIf="approvedQuestions.length == 0">No Data</div>
+                    <div class="card margin-10" *ngFor="let questionObject of approvedQuestions">
+                        <div class="card-body">
+                            <div class="col-12">
+                                <div class="col-8">
+
+                                    <h5 class="card-title">{{questionObject.question}}</h5>
+                                </div>
+                                <div class="col-4 centered questionLeft">
+                                    <p class="card-text">{{questionObject.askedBy}}</p>
+                                    <p class="card-text pad-10">{{questionObject.askedAt}}</p>
+                                </div>
+                            </div>
+
+                            <div class="answer-body" *ngFor="let answerObject of questionObject.allAnswers">
+                                <div class="col-12">
+                                    <div class="col-8">
+                                        <h5 class="card-title">{{answerObject.answer}}</h5>
+                                    </div>
+                                    <div class="col-4 centered questionLeft">
+                                        <p class="card-text">{{answerObject.answeredBy}}</p>
+                                        <p class="card-text pad-10">{{answerObject.answeredAt}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="currentUserType == 'user'">
+                                <label for="exampleFormControlTextarea1" class="form-label">Answer</label>
+                                <textarea class="form-control" placeholder="Answer here" rows="3"
+                                    [(ngModel)]="questionObject.currentAnswer"></textarea>
+                                <div class="post-btn pad-10">
+                                    <button class="btn btn-primary" type="button" (click)="postAnswer(questionObject)">
+                                        <span *ngIf="questionObject.isLoading" class="spinner-border spinner-border-sm"
+                                            role="status" aria-hidden="true"></span>
+                                        {{questionObject.isLoading ? 'Posting...':'Post'}}
+                                    </button>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </tab>
+        <tab heading="{{currentUserType == 'user' ? 'Questions and Answers Pending for approval' : 'Questions & Answers waiting for your approval'}}"
+            (selectTab)="onSelect($event)">
+            <div class="container pad-10">
+                <!-- <div class="card"*ngFor="let questionObject of questionsWFA">
+                    <div class="card-body">
+                        <h5 class="card-title">{{questionObject.question}}</h5>
+                        <p class="card-text">{{questionObject.askedBy}}</p>
+                        <p class="card-text">{{questionObject.askedAt}}</p>
+                        <button type="button" class="btn btn-primary" *ngIf="currentUserType == 'admin'" (click)="approveQuestion(questionObject)">Approve</button>
+                    </div>
+                </div> -->
+                <div *ngIf="questionsWFA.length == 0">No Data</div>
+                <div class="card margin-10" *ngFor="let questionObject of questionsWFA">
+                    <div class="card-body">
+                        <div class="col-12">
+                            <div class="col-8">
+
+                                <h5 class="card-title">{{questionObject.question}}</h5>
+                            </div>
+                            <div class="col-4 centered questionLeft">
+                                <p class="card-text">{{questionObject.askedBy}}</p>
+                                <p class="card-text pad-10">{{questionObject.askedAt}}</p>
+                            </div>
+                        </div>
+                        <div *ngIf="currentUserType == 'admin'">
+                            <div class="post-btn pad-10">
+                                <label class="status-text" *ngIf="questionObject.approval">Approved</label>
+                                <button class="btn btn-primary" type="button" (click)="approveQuestion(questionObject)"
+                                    *ngIf="!questionObject.approval">
+                                    <span *ngIf="questionObject.isLoading" class="spinner-border spinner-border-sm"
+                                        role="status" aria-hidden="true"></span>
+                                    {{questionObject.isLoading ? 'Approving...':'Approve'}}
+                                </button>
+                                <button class="btn btn-primary" type="button" (click)="deleteQuestion(questionObject)">
+                                    <span *ngIf="questionObject.isDeleting" class="spinner-border spinner-border-sm"
+                                        role="status" aria-hidden="true"></span>
+                                    {{questionObject.isDeleting ? 'Deleting...':'Delete'}}
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="currentUserType == 'user'">
+                            <div class="post-btn pad-10">
+                                <label class="status-text-pending">Approval Pending</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="answer-body" *ngFor="let answerObject of questionObject.allAnswers">
+                        <div class="col-12">
+                            <div class="col-8">
+                                <h5 class="card-title">{{answerObject.answer}}</h5>
+                            </div>
+                            <div class="col-4 centered questionLeft">
+                                <p class="card-text">{{answerObject.answeredBy}}</p>
+                                <p class="card-text pad-10">{{answerObject.answeredAt}}</p>
+                            </div>
+                        </div>
+                        <div *ngIf="currentUserType == 'admin'">
+                            <div class="post-btn pad-10">
+                                <label class="status-text" *ngIf="answerObject.approval">Approved</label>
+                                <button class="btn btn-primary" type="button" (click)="approveAnswer(answerObject)"
+                                    *ngIf="!answerObject.approval">
+                                    <span *ngIf="answerObject.isLoading" class="spinner-border spinner-border-sm"
+                                        role="status" aria-hidden="true"></span>
+                                    {{answerObject.isLoading ? 'Approving...':'Approve'}}
+                                </button>
+                                <button class="btn btn-primary" type="button" (click)="deleteAnswer(answerObject)">
+                                    <span *ngIf="answerObject.isDeleting" class="spinner-border spinner-border-sm"
+                                        role="status" aria-hidden="true"></span>
+                                    {{answerObject.isDeleting ? 'Deleting...':'Delete'}}
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="currentUserType == 'user'">
+                            <div class="post-btn pad-10" *ngIf="!answerObject.approval">
+                                <label class="status-text-pending">Approval Pending</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tab>
+        <tab heading="{{currentUserType == 'user' ? 'Messanger' : ''}}">
+            <div class="centered-with-vertical height-100">
+                <div class="width-30">
+                    <div *ngFor="let message of messages" class="col-12 pad-10" style="margin-left:10%;font-size:x-large;">
+                        <small style="background-color:whitesmoke ;">{{message.fromUser}}<small style="background-color:rgb(163, 163, 255);"> : </small><small style="background-color:whitesmoke ;"></small>{{message.message}}</small>
+                    </div>
+                    <h2 style="text-align: center;">message here</h2>
+                    <input type="text" class="form-control" name="name" [(ngModel)]="message">
+                    <div>
+                        <div class="pad-10" style="display: flex;justify-content: center;align-items: center;">
+                            <button type="button" class="btn btn-primary" (click)="sendmsg()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <div *ngIf="admin">
+                <h2>User Login</h2>
+                <label>Email: </label><input type="text" name="email" [(ngModel)]="email" ><br>
+                <label>Password: </label><input type="password" name="password" [(ngModel)]="password" ><br>
+                <button type="button" class="btn btn-primary" (click)="login()">LOGIN</button>
+                <a (click)="loginDetails()">Admin Login</a>
+                <nav><h4>Don't have an account?<a routerLink="/Register">Register</a></h4></nav>
+                <h2>Admin Login</h2>
+                <label>Email: </label><input type="text" name="email" [(ngModel)]="email" ><br>
+                <label>Password: </label><input type="password" name="password" [(ngModel)]="password" ><br>
+                <button type="button" class="btn btn-primary" (click)="login()">LOGIN</button>
+                <a (click)="loginDetails()">User Login </a>
+                <nav><h4>Don't have an account?<a routerLink="/Register">Register</a></h4></nav>
+            </div> -->
+        </tab>
+    </tabset>
+</div>

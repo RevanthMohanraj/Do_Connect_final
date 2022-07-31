@@ -1,0 +1,13 @@
+<nav id="navbar-example2" class="navbar navbar-dark bg-primary" [ngClass]="currentUserType == 'admin' ? 'admin-navbar' : 'user-navbar'">
+    <div class="container-fluid">
+        <a class="navbar-brand">Do Connect</a>
+        <form class="d-flex" style="color: white;" *ngIf="isLoggedIn() && currentUserType == 'user'">
+            <label>{{currentUser}}</label>
+            <label (click)="logOut()">Logout</label>
+        </form>
+        <form class="d-flex" style="color: white;" *ngIf="isLoggedIn() && currentUserType == 'admin'">
+            <label >{{currentUserType}}</label>
+            <label (click)="logOut()">Logout</label>
+        </form>
+    </div>
+</nav>

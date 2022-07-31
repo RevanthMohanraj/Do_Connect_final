@@ -1,0 +1,58 @@
+<div class="centered-with-vertical height-100">
+    <div class="width-30">
+        <div class="centered">
+            <div class="form-check pad-10">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="user"
+                    [(ngModel)]="type">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    User
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="admin"
+                    [(ngModel)]="type">
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Admin
+                </label>
+            </div>
+        </div>
+        <div class="col-12 pad-10">
+            <div class="col-3">
+                Email
+            </div>
+            <div class="col-9">
+                <input type="text" class="form-control" name="email" [(ngModel)]="email">
+            </div>
+        </div>
+        <div class="col-12 pad-10">
+            <div class="col-3">
+                Password
+            </div>
+            <div class="col-9">
+                <input type="password" class="form-control" name="email" [(ngModel)]="password">
+            </div>
+        </div>
+    
+        <div class="centered-with-verticall">
+            <div class="pad-10"><button type="button" class="btn btn-primary" (click)="login()">LOGIN</button></div>
+            <nav>
+                <h4>Don't have an account?<a routerLink="/Register">Register</a></h4>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- <div *ngIf="admin">
+    <h2>User Login</h2>
+    <label>Email: </label><input type="text" name="email" [(ngModel)]="email" ><br>
+    <label>Password: </label><input type="password" name="password" [(ngModel)]="password" ><br>
+    <button type="button" class="btn btn-primary" (click)="login()">LOGIN</button>
+    <a (click)="loginDetails()">Admin Login</a>
+    <nav><h4>Don't have an account?<a routerLink="/Register">Register</a></h4></nav>
+    <h2>Admin Login</h2>
+    <label>Email: </label><input type="text" name="email" [(ngModel)]="email" ><br>
+    <label>Password: </label><input type="password" name="password" [(ngModel)]="password" ><br>
+    <button type="button" class="btn btn-primary" (click)="login()">LOGIN</button>
+    <a (click)="loginDetails()">User Login </a>
+    <nav><h4>Don't have an account?<a routerLink="/Register">Register</a></h4></nav>
+</div> -->
