@@ -1,0 +1,49 @@
+package com.gl.capstoneproject.doconnect.Model;
+
+
+public class Answers {
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getQuestionId() {
+		return questionId;
+	}
+	public void setQuestionId(String questionId) {
+		this.questionId = questionId;
+	}
+	public String getAnswer() {
+		return answer;
+	}
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+	public String getAnsweredBy() {
+		return answeredBy;
+	}
+	public void setAnsweredBy(String answeredBy) {
+		this.answeredBy = answeredBy;
+	}
+	public String getAnsweredAt() {
+		return answeredAt;
+	}
+	public void setAnsweredAt(String answeredAt) {
+		this.answeredAt = answeredAt;
+	}
+	public Boolean getApproval() {
+		return approval;
+	}
+	public void setApproval(Boolean approval) {
+		this.approval = approval;
+	}
+	private String id;
+	private String questionId;
+	private String answer;
+	private String answeredBy;
+	private String answeredAt;
+	private Boolean approval;
+
+}
